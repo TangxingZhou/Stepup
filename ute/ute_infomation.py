@@ -23,14 +23,18 @@ UTE_TESTLINE_TYPE = {'1234': 'FSMF',
                      '5234': 'FSIP'}
 UTE_USER = 'ute'
 UTE_PASSWORD = 'ute'
-UTE_LIBS_URL = {'robotlte': 'https://beisop70.china.nsn-net.net/isource/svnroot/robotlte/trunk/',
-                'utelibs': 'https://beisop70.china.nsn-net.net/isource/svnroot/utelibs/',
-                'talibs': 'https://beisop70.china.nsn-net.net/isource/svnroot/talibs/'}
+UTE_LIBS_URL = {
+    'robotlte': 'https://beisop70.china.nsn-net.net/isource/svnroot/robotlte/trunk/',
+    'utelibs': 'https://beisop70.china.nsn-net.net/isource/svnroot/utelibs/',
+    'talibs': 'https://beisop70.china.nsn-net.net/isource/svnroot/talibs/'}
 
 # svn urls for K3 files
 K3_SVN_ROOT = 'https://esisov70.emea.nsn-net.net/isource/svnroot'
 TTCN3_URL = K3_SVN_ROOT + '/BTS_D_K3LTEASN1/trunk/C_Test/SC_K3LTEASN1/Include/ttcn3'
-CODEC_URL = K3_SVN_ROOT + '/BTS_D_K3LTEASN1/trunk/C_Test/SC_K3LTEASN1/Libraries/redhat64/release/'
-PCMD_TTCN3_URL = K3_SVN_ROOT + '/BTS_D_K3NSETAP_ASN1/tags/LATEST/include/ttcn3/PCMDmod.ttcn3'
-PCMD_CODEC_URL = K3_SVN_ROOT + '/BTS_D_K3NSETAP_ASN1/tags/LATEST/lib64/release/PCMDlib.so'
+CODEC_URL = K3_SVN_ROOT + \
+    '/BTS_D_K3LTEASN1/trunk/C_Test/SC_K3LTEASN1/Libraries/redhat64/release/'
+PCMD_TTCN3_URL = K3_SVN_ROOT + \
+    '/BTS_D_K3NSETAP_ASN1/tags/LATEST/include/ttcn3/PCMDmod.ttcn3'
+PCMD_CODEC_URL = K3_SVN_ROOT + \
+    '/BTS_D_K3NSETAP_ASN1/tags/LATEST/lib64/release/PCMDlib.so'
 K3_URLS = (CODEC_URL, PCMD_CODEC_URL, TTCN3_URL, PCMD_TTCN3_URL)

@@ -5,18 +5,18 @@ import json
 import cookielib
 import time
 import re
-#获取Cookiejar对象（存在本机的cookie消息）
+# 获取Cookiejar对象（存在本机的cookie消息）
 cookie = cookielib.CookieJar()
-#自定义opener,并将opener跟CookieJar对象绑定
+# 自定义opener,并将opener跟CookieJar对象绑定
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))
-#安装opener,此后调用urlopen()时都会使用安装过的opener对象
+# 安装opener,此后调用urlopen()时都会使用安装过的opener对象
 urllib2.install_opener(opener)
- 
+
 home_url = 'http://bj.lianjia.com/'
 auth_url = 'https://passport.lianjia.com/cas/login?service=http%3A%2F%2Fbj.lianjia.com%2F'
 chengjiao_url = 'http://bj.lianjia.com/chengjiao/'
- 
- 
+
+
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate, sdch',
@@ -39,22 +39,23 @@ result = opener.open(req)
 # print(cookie)
 # 获取cookie和lt值
 pattern = re.compile(r'JSESSIONID=(.*)')
-jsessionid = pattern.findall(result.info().getheader('Set-Cookie').split(';')[0])[0]
- 
+jsessionid = pattern.findall(
+    result.info().getheader('Set-Cookie').split(';')[0])[0]
+
 html_content = result.read()
-print 'txzhou',html_content
+print 'txzhou', html_content
 pattern = re.compile(r'value=\"(LT-.*)\"')
 lt = pattern.findall(html_content)[0]
- 
+
 pattern = re.compile(r'name="execution" value="(.*)"')
 execution = pattern.findall(html_content)[0]
- 
+
 # print(cookie)
 # opener.open(lj_uuid_url)
 # print(cookie)
 # opener.open(api_url)
 # print(cookie)
- 
+
 # data
 data = {
     'username': 'YOUR USERNAME',
@@ -69,7 +70,7 @@ data = {
     'redirect': '',
 }
 # urllib进行编码
-post_data=urllib.urlencode(data)
+post_data = urllib.urlencode(data)
 # header
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -87,7 +88,7 @@ headers = {
     'Upgrade-Insecure-Requests': '1',
     'X-Requested-With': 'XMLHttpRequest',
 }
- 
+
 headers2 = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate, sdch',
@@ -104,10 +105,10 @@ headers2 = {
 req = urllib2.Request(auth_url, post_data, headers)
 try:
     result = opener.open(req)
-except urllib2.HTTPError, e:
-    print e.getcode()  
-    print e.reason  
-    print e.geturl()  
+except urllib2.HTTPError as e:
+    print e.getcode()
+    print e.reason
+    print e.geturl()
     print "-------------------------"
     print e.info()
     print(e.geturl())

@@ -6,20 +6,21 @@ import json
 import time
 import re
 import io
-#获取Cookiejar对象（存在本机的cookie消息）
+# 获取Cookiejar对象（存在本机的cookie消息）
 cookie = CookieJar()
-#自定义opener,并将opener跟CookieJar对象绑定
-opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookie))
-#安装opener,此后调用urlopen()时都会使用安装过的opener对象
+# 自定义opener,并将opener跟CookieJar对象绑定
+opener = urllib.request.build_opener(
+    urllib.request.HTTPCookieProcessor(cookie))
+# 安装opener,此后调用urlopen()时都会使用安装过的opener对象
 urllib.request.install_opener(opener)
- 
+
 #home_url = 'http://bj.lianjia.com/'
-home_url ='http://bj.lianjia.com/?ticket=ST-3472563-UJn2VqMDq6Bw1ZKD7rNu-www.lianjia.com'
+home_url = 'http://bj.lianjia.com/?ticket=ST-3472563-UJn2VqMDq6Bw1ZKD7rNu-www.lianjia.com'
 auth_url = 'https://passport.lianjia.com/cas/login?service=http%3A%2F%2Fbj.lianjia.com%2F'
 #auth_url ='https://passport.lianjia.com/cas/login?service=http%3A%2F%2Fbj.lianjia.com%2F&renew=1'
 chengjiao_url = 'http://bj.lianjia.com/chengjiao/'
- 
- 
+
+
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate, sdch',
@@ -35,39 +36,39 @@ headers = {
 # 获取lianjia_uuid
 req = urllib.request.Request(home_url)
 opener.open(req)
-#print('txzhou',opener.open(req).read().decode())
-print('INFO: COOKIE is: ',cookie)
+# print('txzhou',opener.open(req).read().decode())
+print('INFO: COOKIE is: ', cookie)
 # 初始化表单
 req = urllib.request.Request(auth_url, headers=headers)
-#print('txzhou',req)
+# print('txzhou',req)
 result = opener.open(req)
-print('INFO: COOKIE is: ',cookie)
+print('INFO: COOKIE is: ', cookie)
 #print('txzhou result',result.getheaders())
-#print('txzhou',result.read())
+# print('txzhou',result.read())
 # 获取cookie和lt值
 pattern = re.compile(r'JSESSIONID=(.*)')
 jsessionid = pattern.findall(result.getheader('Set-Cookie').split(';')[0])[0]
-print('INFO: JSESSIONID is: ',jsessionid)
-if result.getheader('Content-Encoding')=='gzip':
+print('INFO: JSESSIONID is: ', jsessionid)
+if result.getheader('Content-Encoding') == 'gzip':
     import gzip
     buf = io.BytesIO(result.read())
     f = gzip.GzipFile(fileobj=buf)
     html_content = f.read().decode()
 #html_content = result.read().decode('GB2312','ignore')
-#print('txzhou',type(html_content))
-#print('txzhou',html_content)
+# print('txzhou',type(html_content))
+# print('txzhou',html_content)
 pattern = re.compile(r'value=\"(LT-.*)\"')
 lt = pattern.findall(html_content)[0]
-print('INFO: LT is: ',lt)
+print('INFO: LT is: ', lt)
 pattern = re.compile(r'name="execution" value="(.*)"')
 execution = pattern.findall(html_content)[0]
-print('INFO: EXECUTION is: ',execution)
+print('INFO: EXECUTION is: ', execution)
 # print(cookie)
 # opener.open(lj_uuid_url)
 # print(cookie)
 # opener.open(api_url)
 # print(cookie)
- 
+
 # data
 data = {
     'username': '15000573643',
@@ -82,7 +83,7 @@ data = {
     'redirect': '',
 }
 # urllib进行编码
-post_data=urllib.parse.urlencode(data).encode()
+post_data = urllib.parse.urlencode(data).encode()
 #print('INFO: ',post_data)
 # header
 headers = {
@@ -101,7 +102,7 @@ headers = {
     'Upgrade-Insecure-Requests': '1',
     'X-Requested-With': 'XMLHttpRequest',
 }
- 
+
 headers2 = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate, sdch',
@@ -117,17 +118,17 @@ headers2 = {
 }
 req = urllib.request.Request(auth_url, post_data, headers)
 try:
-    print('INFO: COOKIE is: ',cookie)
+    print('INFO: COOKIE is: ', cookie)
     result = opener.open(req)
 except urllib.error.HTTPError as e:
-    print('INFO: ',e.getcode())
-    print('INFO: ',e.reason)
-    print('INFO: ',e.geturl()) 
+    print('INFO: ', e.getcode())
+    print('INFO: ', e.reason)
+    print('INFO: ', e.geturl())
     print("-------------------------")
-    print('INFO: ',e.info())
-    print('INFO: ',e.geturl())
+    print('INFO: ', e.info())
+    print('INFO: ', e.geturl())
     req = urllib.request.Request(e.geturl())
     result = opener.open(req)
     req = urllib.request.Request(chengjiao_url)
     result = opener.open(req).read()
-    #print(result)
+    # print(result)

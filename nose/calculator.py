@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
+
 class Count():
 
-    def __init__(self,a,b):
-        self.a=int(a)
-        self.b=int(b)
+    def __init__(self, a, b):
+        self.a = int(a)
+        self.b = int(b)
 
     def add(self):
-        return self.a+self.b
+        return self.a + self.b
 
     def sub(self):
-        return self.a-self.b
+        return self.a - self.b

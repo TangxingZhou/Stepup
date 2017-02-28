@@ -9,14 +9,18 @@ from nose.tools import assert_is_not_none, assert_is_instance, assert_equal
 
 @test(groups=['page.request'])
 def test_request_page():
-    assert_is_not_none(PageSpider.request_page('http://sh.meituan.com')['body'], msg='No response got')
+    assert_is_not_none(
+        PageSpider.request_page('http://sh.meituan.com')['body'],
+        msg='No response got')
 
 
 @test(groups=['page.spider'], depends_on_groups=['page.request'])
 def test_spider_page():
     page_spider = PageSpider()
-    assert_is_instance(page_spider.spider_page('http://sh.meituan.com'), BeautifulSoup,
-                       msg='No BeautifulSoup instance got')
+    assert_is_instance(
+        page_spider.spider_page('http://sh.meituan.com'),
+        BeautifulSoup,
+        msg='No BeautifulSoup instance got')
 
 
 @test(groups=['page.xpath'], depends_on=[test_spider_page])
@@ -45,7 +49,10 @@ class TestXpath(unittest.TestCase):
         print(self.spider.xpath)
         print(self.spider.specified_contents)
         print(self.spider._flag_all)
-        assert_equal((self.spider.xpath, self.spider.specified_contents, self.spider._flag_all), expected)
+        assert_equal((self.spider.xpath,
+                      self.spider.specified_contents,
+                      self.spider._flag_all),
+                     expected)
 
 
 @test(groups=['page.elements'], depends_on_groups=['page.tags'])
@@ -71,7 +78,8 @@ class TestElements(unittest.TestCase):
         self.spider.parse_xpath_of_tag(xpath)
         self.spider.find_tag(self.spider._soup, *tuple(self.spider.xpath))
         self.spider.get_specified_elements()
-        assert_equal((self.spider.contexts, self.spider.text, self.spider.attributes), expected)
+        assert_equal((self.spider.contexts, self.spider.text,
+                      self.spider.attributes), expected)
 
 
 @test(groups=['page.tags'], depends_on_groups=['page.xpath'])

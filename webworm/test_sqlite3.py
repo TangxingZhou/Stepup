@@ -20,11 +20,21 @@ class TestSql(unittest.TestCase):
     @test(groups=['commands'])
     @parameterized.expand([
         (("INSERT INTO user VALUES(?,?,?,?) ('Tom', '20', '1990-05-24', '90')"),
-          'user', ['name', 'age', 'birthday', 'score'],
-          {'name': 'Tom', 'age': '20', 'birthday': '1990-05-24', 'score': '90'}),
+         'user', ['name', 'age', 'birthday', 'score'],
+         {'name': 'Tom', 'age': '20', 'birthday': '1990-05-24', 'score': '90'}),
         (("INSERT INTO user VALUES(?,?) ('Jack', '21')"),
          'user', ['name', 'age', 'birthday', 'score'], {'name': 'Jack', 'age': '21'}),
     ])
-    def test_gen_insert_command(self, expected, table_name, items_name=None, insert_info=None):
+    def test_gen_insert_command(
+            self,
+            expected,
+            table_name,
+            items_name=None,
+            insert_info=None):
         """test the function of gen_insert_command"""
-        assert_equal(self.db.gen_insert_command(table_name, items_name, insert_info), expected)
+        assert_equal(
+            self.db.gen_insert_command(
+                table_name,
+                items_name,
+                insert_info),
+            expected)

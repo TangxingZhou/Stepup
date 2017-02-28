@@ -60,6 +60,8 @@ class TestWebPage(unittest.TestCase):
     ])
     def test_get_elements_from_page(self, xpath, expected):
         self.page_spider = PageSpider()
-        self.web_spider = WebSpider('http://sh.meituan.com', url_generator, {xpath: XpathCaller()}, WebCaller())
-        result = self.web_spider.get_into_new_page(page_spider=self.page_spider)
+        self.web_spider = WebSpider(
+            'http://sh.meituan.com', url_generator, {xpath: XpathCaller()}, WebCaller())
+        result = self.web_spider.get_into_new_page(
+            page_spider=self.page_spider)
         assert_equal(result, expected)

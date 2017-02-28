@@ -48,8 +48,9 @@ class StoreInDataBase(object):
                 data_to_store[self.items[index]] = self.list2str(data_get)
             self.db.insert_table(self.table_name, *self.items, **data_to_store)
         except Exception as e:
-            error_logger.error('Failed to store data: {} into table "{}" since: {}'.
-                               format(data_to_store, self.table_name, e))
+            error_logger.error(
+                'Failed to store data: {} into table "{}" since: {}'. format(
+                    data_to_store, self.table_name, e))
 
     @staticmethod
     def list2str(data_list):

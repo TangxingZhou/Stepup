@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+        <script
+            src="http://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+        <title>Fruits</title>
+        <script type="text/javascript" src="fnz.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                for (var fruit in fruits) {
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>' + fruit + '</td>' + '<td>' + fruits[fruit] + '</td>';
+                    $('#fruit_price_id tbody').append(tr);
+                }
+                $('#checkout_btn_id').click(function () {
+                    var input_money = $('#total_money_id').val();
+                    var re_money = /^[1-9]\d*/;
+                    if (re_money.test(input_money))
+                    {
+                        $('#fruit_group_id tbody').empty();
+                        tatal_money = Number(input_money);
+                        get_fruits_group(tatal_money);
+                        leaves.forEach(function(element, index) {
+                            var node = element;
+                            index += 1;
+                            var i = 0;
+                            var group = [];
+                            while (node != null)
+                            {
+                                if (node.weight > 0)
+                                {
+                                    var tr = document.createElement('tr');
+                                    tr.innerHTML = '<td>' + fruits_list[node.level - 1] + '</td>' + 
+                                    '<td>' + price_list[node.level - 1] + '</td>' + 
+                                    '<td>' + node.weight + '</td>' + 
+                                    '<td>' + price_list[node.level - 1] * node.weight + '</td>';
+                                    group.push(tr);
+                                    i += 1;
+                                }
+                                node = node.parents;
+                            }
+                            group[0].innerHTML = '<td rowspan="' + i + '">' + index + '</td>' + group[0].innerHTML
+                            group.forEach(function(element) {
+                                $('#fruit_group_id tbody').append(element);
+                            });
+                        });
+                    }
+                    else
+                    {
+                        alert("Please input correct amount of money!");
+                    }
+                });
+            })
+        </script>
+    </head>
+    <body>
+        <div class="ui inverted light green segment">
+            <h1 class="ui center aligned header">FNZ Code Test</h1>
+        </div>
+        <div class="ui segment">
+            <h3 class="ui center aligned header">Fruits Price</h3>
+            <table id="fruit_price_id" class="ui purple table">
+                <thead>
+                    <tr>
+                        <th>Fruit Name</th>
+                        <th>Fruit Price</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="ui segment">
+            <div class="ui right action input focus">
+                <input id="total_money_id" type="text" placeholder="RMB" value="">
+                <button id="checkout_btn_id" class="ui teal labeled icon button">
+                    <i class="cart icon"></i> Checkout </button>
+            </div>
+        </div>
+        <div class="ui segment">
+            <h3 class="ui center aligned header">Fruits Groups</h3>
+            <table id="fruit_group_id" class="ui green table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </body>
+</html>
